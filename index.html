@@ -1138,15 +1138,12 @@
                           action="https://formspree.io/f/mrbloqyd" 
                           method="POST"
                           enctype="application/json"
-                          class="contacto-form animate-on-scroll"
-                          target="hiddenFrame"
+                           class="contacto-form"   
+                           target="hiddenFrame"
                          
                     >
-                           <!-- Campo clave para limpiar el formulario -->
-                            <input type="hidden" name="_reset" value="1">
-    
-                            <!-- Redirección a la misma página (sin parámetros) -->
-                            <input type="hidden" name="_next" value="#">
+                          <!-- Redirección a la misma página con parámetro -->
+                        <input type="hidden" name="_next" value="?success=1#form-top">    
                        
                        <div class="form-group">
                         <label for="nombre">Nombre</label>
@@ -1235,8 +1232,32 @@
             });
         });
     </script>
+ <!-- Mensaje de éxito (oculto inicialmente) -->
+    <div id="success-message">
+        ✓ Mensaje enviado correctamente
+    </div>
+
+    <!-- Iframe oculto para el envío -->
+    <iframe name="hiddenFrame"></iframe>
+
+    <!-- Script mínimo para limpiar el formulario -->
+    <script>
+        // Mostrar mensaje si hay éxito
+        if(window.location.search.includes('success=1')) {
+            document.getElementById('success-message').style.display = 'block';
+            
+            // Limpiar el formulario
+            document.querySelector('form').reset();
+            
+            // Opcional: Desplazarse al mensaje
+            window.location.hash = '#form-top';
+        }
+    </script>
+
+
 </body>
 </html>
+
 
 
 
