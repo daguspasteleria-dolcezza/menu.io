@@ -1153,23 +1153,8 @@
                         <div class="form-group">
                         <label for="mensaje">Mensaje</label>
                         <textarea id="mensaje" name="message" placeholder="¿Cómo podemos ayudarte?" required></textarea>
-                        </div>
-                        
+                        </div> 
                         <button type="submit" class="btn">Enviar Mensaje</button> 
-                       
-                        <div class="form-container">
-        <!-- Mensaje de éxito (se muestra solo cuando success=1 está en la URL) -->
-        <div class="success-message" style="display: <?php echo (isset($_GET['success']) ? 'block' : 'none'); ?>;">
-            <div class="check-icon">✓</div>
-            <h2>¡Mensaje enviado con éxito!</h2>
-            <p>Gracias por contactarnos. Te responderemos pronto.</p>
-        </div>
-
-        <!-- Formulario (configurado para redirigir a esta misma página con ?success=1) -->
-        <form action="https://formspree.io/f/mrbloqyd" method="POST">
-            <!-- Campo oculto para redirección después del envío -->
-            <input type="hidden" name="_next" value="https://daguspasteleria-dolcezza.github.io/menu.io/?success=1">
-                <div class="contacto-form animate-on-scroll">
                 </form>
              </div>
           </div>
@@ -1242,6 +1227,7 @@
     </script>
 </body>
 </html>
+
 
 
 
