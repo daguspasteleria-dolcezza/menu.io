@@ -1165,31 +1165,6 @@
              </div>
           </div>
         </div> 
-        <!-- MENSAJE DE CONFIRMACIÓN (oculto inicialmente) -->
-<div id="form-confirmation" style="display: <?php echo isset($_GET['success']) ? 'block' : 'none'; ?>; margin-top: 20px; text-align: center;">
-    ✓ Mensaje enviado correctamente
-</div>
-
-<!-- IFRAME OCULTO para el envío -->
-<iframe name="hiddenFrame" style="display: none;"></iframe>
-
-<!-- ESTILO ADICIONAL -->
-<style>
-    /* Ocultar formulario si hay éxito */
-    <?php if(isset($_GET['success'])): ?>
-    form.contacto-form {
-        display: none;
-    }
-    <?php endif; ?>
-    
-    /* Reset visual después del envío */
-    :target form.contacto-form {
-        display: block;
-    }
-    :target #form-confirmation {
-        display: none;
-    }
-</style>
     </section>
     <!-- Footer -->
     <footer>
@@ -1258,6 +1233,7 @@
     </script>
 </body>
 </html>
+
 
 
 
