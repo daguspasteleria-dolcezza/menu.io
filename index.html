@@ -1139,9 +1139,15 @@
                           method="POST"
                           enctype="application/json"
                           class="contacto-form animate-on-scroll"
+                          target="hiddenFrame"
                          
                     >
-                          
+                           <!-- Campo clave para limpiar el formulario -->
+                            <input type="hidden" name="_reset" value="1">
+    
+                            <!-- Redirección a la misma página (sin parámetros) -->
+                            <input type="hidden" name="_next" value="#">
+                       
                        <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="name" placeholder="Tu nombre" required>
@@ -1161,6 +1167,8 @@
              </div>
           </div>
         </div> 
+        <!-- Iframe oculto (necesario para el funcionamiento) -->
+        <iframe name="hiddenFrame" style="display:none;"></iframe>
     </section>
     <!-- Footer -->
     <footer>
@@ -1229,6 +1237,7 @@
     </script>
 </body>
 </html>
+
 
 
 
