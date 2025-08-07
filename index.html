@@ -1133,39 +1133,7 @@
                         </div>
                     </div>
                 </div>
-                  
-                   <form 
-                          action="https://formspree.io/f/mrbloqyd" 
-                          method="POST"
-                          enctype="application/json"
-                           class="contacto-form"   
-                           target="hiddenFrame"
-                         
-                    >
-                          <!-- Redirección a la misma página con parámetro -->
-                        <input type="hidden" name="_next" value="?success=1#form-top">    
-                       
-                       <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="name" placeholder="Tu nombre" required>
-                        </div>
 
-                        <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="tu@mail.com" required>
-                        </div>
-
-                        <div class="form-group">
-                        <label for="mensaje">Mensaje</label>
-                        <textarea id="mensaje" name="message" placeholder="¿Cómo podemos ayudarte?" required></textarea>
-                        </div> 
-                        <button type="submit" class="btn">Enviar Mensaje</button> 
-                </form>  
-             </div>
-          </div>
-        </div> 
-        <!-- Iframe oculto (necesario para el funcionamiento) -->
-        <iframe name="hiddenFrame" style="display:none;"></iframe>
     </section>
     <!-- Footer -->
     <footer>
@@ -1232,31 +1200,10 @@
             });
         });
     </script>
- <!-- Mensaje de éxito (oculto inicialmente) -->
-    <div id="success-message">
-        ✓ Mensaje enviado correctamente
-    </div>
-
-    <!-- Iframe oculto para el envío -->
-    <iframe name="hiddenFrame"></iframe>
-
-    <!-- Script mínimo para limpiar el formulario -->
-    <script>
-        // Mostrar mensaje si hay éxito
-        if(window.location.search.includes('success=1')) {
-            document.getElementById('success-message').style.display = 'block';
-            
-            // Limpiar el formulario
-            document.querySelector('form').reset();
-            
-            // Opcional: Desplazarse al mensaje
-            window.location.hash = '#form-top';
-        }
-    </script>
-
 
 </body>
 </html>
+
 
 
 
