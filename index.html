@@ -1140,26 +1140,23 @@
                           enctype="application/json"
                           class="contacto-form animate-on-scroll"
                     >
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" placeholder="Tu nombre">
-                        </div>
                         
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="name" placeholder="Tu nombre" required>
+                      </div>
+  
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="tu@mail.com">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="mensaje">Mensaje</label>
-                            <textarea id="mensaje" placeholder="¿Cómo podemos ayudarte?"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn">Enviar Mensaje</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="tu@mail.com" required>
+                  </div>
+  
+                  <div class="form-group">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="message" placeholder="¿Cómo podemos ayudarte?" required></textarea>
+                  </div>
+  
+                  <button type="submit" class="btn">Enviar Mensaje</button>
+            </form>
     </section>
 
     <!-- Footer -->
@@ -1229,6 +1226,7 @@
     </script>
 </body>
 </html>
+
 
 
 
