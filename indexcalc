@@ -1,0 +1,149 @@
+
+import streamlit as st
+
+# ---------------------------------
+# CONFIGURACIÓN
+# ---------------------------------
+st.set_page_config(
+    page_title="DAGUS LAB | Calculadora",
+    page_icon="🍰",
+    layout="centered"
+)
+
+# Equivalencias aproximadas por taza de 240 ml
+INGREDIENTES = {
+    "Harina de trigo": 125,
+    "Azúcar granulada": 200,
+    "Azúcar glass": 120,
+    "Mantequilla": 227,
+    "Cacao en polvo": 85,
+    "Avena en hojuelas": 90,
+    "Maicena": 120,
+    "Azúcar morena compactada": 220
+}
+
+# ---------------------------------
+# ESTILO VISUAL DAGUS
+# ---------------------------------
+st.markdown("""
+<style>
+.stApp {
+    background-color: #FAF5EF;
+}
+h1, h2, h3 {
+    color: #704536;
+}
+div.stButton > button {
+    background-color: #A65E43;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+}
+div.stButton > button:hover {
+    background-color: #704536;
+    color: white;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ---------------------------------
+# ENCABEZADO
+# ---------------------------------
+st.title("🍰 DAGUS LAB")
+st.subheader("Calculadora de repostería")
+
+st.write(
+    "Convierte medidas de tus ingredientes "
+    "y prepara tus recetas con mayor facilidad."
+)
+
+st.info("Herramienta gratuita para amantes de la repostería ❤️")
+
+# ---------------------------------
+# SELECCIÓN DE INGREDIENTE
+# ---------------------------------
+ingrediente = st.selectbox(
+    "Selecciona tu ingrediente:",
+    list(INGREDIENTES.keys())
+)
+
+gramos_por_taza = INGREDIENTES[ingrediente]
+
+st.caption(
+    f"Referencia: 1 taza de {ingrediente.lower()} "
+    f"equivale aproximadamente a {gramos_por_taza} gramos."
+)
+
+# ---------------------------------
+# CALCULADORAS
+# ---------------------------------
+tab1, tab2, tab3 = st.tabs([
+    "Gramos a tazas",
+    "Tazas a gramos",
+    "Otras medidas"
+])
+
+with tab1:
+    st.markdown("### ⚖️ De gramos a tazas")
+
+    gramos = st.number_input(
+        "Ingresa los gramos:",
+        min_value=0.0,
+        value=250.0,
+        step=10.0
+    )
+
+    if st.button("Convertir a tazas"):
+        resultado = gramos / gramos_por_taza
+
+        st.success(
+            f"{gramos:g} gramos equivalen a "
+            f"{resultado:.2f} tazas."
+        )
+
+with tab2:
+    st.markdown("### 🥣 De tazas a gramos")
+
+    tazas = st.number_input(
+        "Ingresa la cantidad de tazas:",
+        min_value=0.0,
+        value=1.0,
+        step=0.25
+    )
+
+    if st.button("Convertir a gramos"):
+        resultado = tazas * gramos_por_taza
+
+        st.success(
+            f"{tazas:g} tazas equivalen a "
+            f"{resultado:.1f} gramos."
+        )
+
+with tab3:
+    st.markdown("### 🥄 Medidas de cocina")
+
+    st.write("Equivalencias de volumen:")
+    st.write("- 1 taza = 240 ml")
+    st.write("- 1/2 taza = 120 ml")
+    st.write("- 1/4 taza = 60 ml")
+    st.write("- 1 cucharada = 15 ml")
+    st.write("- 1 cucharadita = 5 ml")
+    st.write("- 1 taza = 16 cucharadas")
+    st.write("- 1 taza = 48 cucharaditas")
+
+# ---------------------------------
+# PIE DE PÁGINA
+# ---------------------------------
+st.divider()
+
+st.markdown(
+    """
+    <div style="text-align:center; color:#704536;">
+        <h3>DAGUS PASTELERÍA</h3>
+        <p>No regalas cosas, regalas momentos ❤️</p>
+        <small>Un espacio para aprender, crear y disfrutar.</small>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
