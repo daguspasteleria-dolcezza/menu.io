@@ -1,149 +1,512 @@
 
-import streamlit as st
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAGUS LAB: herramientas gratuitas para amantes de la repostería.">
+    <meta name="theme-color" content="#704536">
+    <title>DAGUS LAB | Calculadora de Repostería</title>
 
-# ---------------------------------
-# CONFIGURACIÓN
-# ---------------------------------
-st.set_page_config(
-    page_title="DAGUS LAB | Calculadora",
-    page_icon="🍰",
-    layout="centered"
-)
+    <style>
+        :root {
+            --cafe: #704536;
+            --terracota: #A65E43;
+            --crema: #FAF5EF;
+            --rosa: #EFC3CD;
+            --texto: #49352D;
+            --blanco: #FFFFFF;
+        }
 
-# Equivalencias aproximadas por taza de 240 ml
-INGREDIENTES = {
-    "Harina de trigo": 125,
-    "Azúcar granulada": 200,
-    "Azúcar glass": 120,
-    "Mantequilla": 227,
-    "Cacao en polvo": 85,
-    "Avena en hojuelas": 90,
-    "Maicena": 120,
-    "Azúcar morena compactada": 220
-}
+        * {
+            box-sizing: border-box;
+        }
 
-# ---------------------------------
-# ESTILO VISUAL DAGUS
-# ---------------------------------
-st.markdown("""
-<style>
-.stApp {
-    background-color: #FAF5EF;
-}
-h1, h2, h3 {
-    color: #704536;
-}
-div.stButton > button {
-    background-color: #A65E43;
-    color: white;
-    border-radius: 10px;
-    border: none;
-    width: 100%;
-}
-div.stButton > button:hover {
-    background-color: #704536;
-    color: white;
-}
-</style>
-""", unsafe_allow_html=True)
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--crema);
+            color: var(--texto);
+            line-height: 1.6;
+        }
 
-# ---------------------------------
-# ENCABEZADO
-# ---------------------------------
-st.title("🍰 DAGUS LAB")
-st.subheader("Calculadora de repostería")
+        header {
+            text-align: center;
+            padding: 30px 16px 20px;
+        }
 
-st.write(
-    "Convierte medidas de tus ingredientes "
-    "y prepara tus recetas con mayor facilidad."
-)
+        .brand {
+            color: var(--cafe);
+            font-family: Georgia, serif;
+            font-size: 38px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
 
-st.info("Herramienta gratuita para amantes de la repostería ❤️")
+        .brand span {
+            display: block;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            letter-spacing: 5px;
+            font-weight: normal;
+        }
 
-# ---------------------------------
-# SELECCIÓN DE INGREDIENTE
-# ---------------------------------
-ingrediente = st.selectbox(
-    "Selecciona tu ingrediente:",
-    list(INGREDIENTES.keys())
-)
+        .slogan {
+            color: var(--terracota);
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-size: 17px;
+            margin-top: 10px;
+        }
 
-gramos_por_taza = INGREDIENTES[ingrediente]
+        .container {
+            max-width: 720px;
+            margin: auto;
+            padding: 12px 16px 35px;
+        }
 
-st.caption(
-    f"Referencia: 1 taza de {ingrediente.lower()} "
-    f"equivale aproximadamente a {gramos_por_taza} gramos."
-)
+        .hero {
+            background: var(--cafe);
+            color: white;
+            padding: 27px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 22px;
+        }
 
-# ---------------------------------
-# CALCULADORAS
-# ---------------------------------
-tab1, tab2, tab3 = st.tabs([
-    "Gramos a tazas",
-    "Tazas a gramos",
-    "Otras medidas"
-])
+        .hero .tag {
+            display: inline-block;
+            background: var(--rosa);
+            color: var(--cafe);
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-size: 13px;
+            font-weight: bold;
+        }
 
-with tab1:
-    st.markdown("### ⚖️ De gramos a tazas")
+        .hero h1 {
+            font-size: 29px;
+            margin: 13px 0 8px;
+        }
 
-    gramos = st.number_input(
-        "Ingresa los gramos:",
-        min_value=0.0,
-        value=250.0,
-        step=10.0
-    )
+        .hero p {
+            margin: 0;
+            font-size: 15px;
+        }
 
-    if st.button("Convertir a tazas"):
-        resultado = gramos / gramos_por_taza
+        .card {
+            background: var(--blanco);
+            padding: 23px;
+            margin-bottom: 20px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(80, 48, 35, 0.08);
+        }
 
-        st.success(
-            f"{gramos:g} gramos equivalen a "
-            f"{resultado:.2f} tazas."
-        )
+        .card h2 {
+            color: var(--cafe);
+            font-size: 21px;
+            margin: 0 0 14px;
+        }
 
-with tab2:
-    st.markdown("### 🥣 De tazas a gramos")
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 14px 0 6px;
+            font-size: 14px;
+        }
 
-    tazas = st.number_input(
-        "Ingresa la cantidad de tazas:",
-        min_value=0.0,
-        value=1.0,
-        step=0.25
-    )
+        select, input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #DDC9BC;
+            background: #FFFCF9;
+            border-radius: 10px;
+            font-size: 16px;
+            color: var(--texto);
+        }
 
-    if st.button("Convertir a gramos"):
-        resultado = tazas * gramos_por_taza
+        select:focus, input:focus {
+            outline: 2px solid var(--rosa);
+            border-color: var(--terracota);
+        }
 
-        st.success(
-            f"{tazas:g} tazas equivalen a "
-            f"{resultado:.1f} gramos."
-        )
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
 
-with tab3:
-    st.markdown("### 🥄 Medidas de cocina")
+        .tab {
+            flex: 1;
+            padding: 12px 7px;
+            border: 1px solid #DDC9BC;
+            border-radius: 10px;
+            color: var(--cafe);
+            background: #FFF9F5;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
 
-    st.write("Equivalencias de volumen:")
-    st.write("- 1 taza = 240 ml")
-    st.write("- 1/2 taza = 120 ml")
-    st.write("- 1/4 taza = 60 ml")
-    st.write("- 1 cucharada = 15 ml")
-    st.write("- 1 cucharadita = 5 ml")
-    st.write("- 1 taza = 16 cucharadas")
-    st.write("- 1 taza = 48 cucharaditas")
+        .tab.active {
+            color: white;
+            background: var(--terracota);
+            border-color: var(--terracota);
+        }
 
-# ---------------------------------
-# PIE DE PÁGINA
-# ---------------------------------
-st.divider()
+        .panel {
+            display: none;
+        }
 
-st.markdown(
-    """
-    <div style="text-align:center; color:#704536;">
-        <h3>DAGUS PASTELERÍA</h3>
-        <p>No regalas cosas, regalas momentos ❤️</p>
-        <small>Un espacio para aprender, crear y disfrutar.</small>
+        .panel.active {
+            display: block;
+        }
+
+        .convertir {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--terracota);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .convertir:hover {
+            background: var(--cafe);
+        }
+
+        .resultado {
+            display: none;
+            background: #F9E9EC;
+            border: 1px solid var(--rosa);
+            border-radius: 12px;
+            margin-top: 17px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .resultado small {
+            display: block;
+            color: var(--cafe);
+        }
+
+        .resultado strong {
+            display: block;
+            font-size: 27px;
+            color: var(--terracota);
+            margin: 4px 0;
+        }
+
+        .reference {
+            background: #FAF5EF;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #70584C;
+        }
+
+        .measure-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .measure {
+            background: #FAF5EF;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .measure strong {
+            color: var(--terracota);
+            display: block;
+            font-size: 19px;
+        }
+
+        .notice {
+            font-size: 12px;
+            color: #806D62;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: var(--cafe);
+        }
+
+        footer strong {
+            font-family: Georgia, serif;
+            font-size: 22px;
+        }
+
+        @media (max-width: 420px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        DAGUS
+        <span>PASTELERÍA</span>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+    <div class="slogan">
+        No regalas cosas, regalas momentos ♡
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <span class="tag">HERRAMIENTA GRATUITA</span>
+        <h1>🍰 ¡Bienvenido a DAGUS LAB!</h1>
+        <p>
+            Tu espacio para aprender, crear y disfrutar
+            del maravilloso mundo de la repostería.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>⚖️ Calculadora de repostería</h2>
+
+        <label for="ingrediente">Selecciona tu ingrediente:</label>
+        <select id="ingrediente">
+            <option value="125">Harina de trigo</option>
+            <option value="200">Azúcar granulada</option>
+            <option value="120">Azúcar glass</option>
+            <option value="227">Mantequilla</option>
+            <option value="85">Cacao en polvo</option>
+            <option value="90">Avena en hojuelas</option>
+            <option value="120">Maicena</option>
+            <option value="220">Azúcar morena compactada</option>
+        </select>
+
+        <div class="reference" id="referencia">
+            1 taza de harina de trigo equivale aproximadamente a 125 gramos.
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="mostrar('gramos', this)">
+                Gramos a tazas
+            </button>
+            <button class="tab" onclick="mostrar('tazas', this)">
+                Tazas a gramos
+            </button>
+            <button class="tab" onclick="mostrar('medidas', this)">
+                Otras medidas
+            </button>
+        </div>
+
+        <div id="gramos" class="panel active">
+            <label for="cantidadGramos">Cantidad en gramos:</label>
+            <input
+                type="number"
+                id="cantidadGramos"
+                min="0"
+                step="any"
+                placeholder="Ejemplo: 250"
+            >
+
+            <button class="convertir" onclick="convertirGramos()">
+                Convertir a tazas
+            </button>
+
+            <div id="resultadoGramos" class="resultado">
+                <small>RESULTADO</small>
+                <strong id="valorTazas"></strong>
+                <span id="detalleGramos"></span>
+            </div>
+        </div>
+
+        <div id="tazas" class="panel">
+            <label for="cantidadTazas">Cantidad en tazas:</label>
+            <input
+                type="number"
+                id="cantidadTazas"
+                min="0"
+                step="any"
+                placeholder="Ejemplo: 2"
+            >
+
+            <button class="convertir" onclick="convertirTazas()">
+                Convertir a gramos
+            </button>
+
+            <div id="resultadoTazas" class="resultado">
+                <small>RESULTADO</small>
+                <strong id="valorGramos"></strong>
+                <span id="detalleTazas"></span>
+            </div>
+        </div>
+
+        <div id="medidas" class="panel">
+            <h2>🥄 Equivalencias de cocina</h2>
+
+            <div class="measure-grid">
+                <div class="measure">
+                    <strong>240 ml</strong>
+                    1 taza
+                </div>
+                <div class="measure">
+                    <strong>120 ml</strong>
+                    ½ taza
+                </div>
+                <div class="measure">
+                    <strong>60 ml</strong>
+                    ¼ taza
+                </div>
+                <div class="measure">
+                    <strong>15 ml</strong>
+                    1 cucharada
+                </div>
+                <div class="measure">
+                    <strong>5 ml</strong>
+                    1 cucharadita
+                </div>
+                <div class="measure">
+                    <strong>16</strong>
+                    Cucharadas por taza
+                </div>
+            </div>
+        </div>
+
+        <p class="notice">
+            * Las equivalencias de peso son aproximadas.
+            Pueden variar según el ingrediente, la marca,
+            la humedad y la forma de llenar la taza.
+            Para obtener mayor precisión, utiliza una balanza.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>❤️ Más que una pastelería</h2>
+        <p>
+            En DAGUS creemos que compartir, aprender y crear
+            también son formas de regalar momentos.
+        </p>
+        <p>
+            Esta herramienta es gratuita para nuestra comunidad
+            de amantes de la repostería.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    <strong>DAGUS PASTELERÍA</strong>
+    <p>No regalas cosas, regalas momentos ♡</p>
+    <small>© 2026 DAGUS LAB · Todos los derechos reservados.</small>
+</footer>
+
+<script>
+    const ingrediente = document.getElementById("ingrediente");
+    const referencia = document.getElementById("referencia");
+
+    const nombres = {
+        "125": "harina de trigo",
+        "200": "azúcar granulada",
+        "120": "azúcar glass o maicena",
+        "227": "mantequilla",
+        "85": "cacao en polvo",
+        "90": "avena en hojuelas",
+        "220": "azúcar morena compactada"
+    };
+
+    function nombreIngrediente() {
+        return ingrediente.options[ingrediente.selectedIndex].text;
+    }
+
+    function actualizarReferencia() {
+        const gramos = Number(ingrediente.value);
+        referencia.textContent =
+            "1 taza de " + nombreIngrediente().toLowerCase() +
+            " equivale aproximadamente a " + gramos + " gramos.";
+    }
+
+    ingrediente.addEventListener("change", function() {
+        actualizarReferencia();
+        document.getElementById("resultadoGramos").style.display = "none";
+        document.getElementById("resultadoTazas").style.display = "none";
+    });
+
+    function mostrar(panelId, boton) {
+        document.querySelectorAll(".panel").forEach(panel => {
+            panel.classList.remove("active");
+        });
+
+        document.querySelectorAll(".tab").forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+        document.getElementById(panelId).classList.add("active");
+        boton.classList.add("active");
+    }
+
+    function convertirGramos() {
+        const gramos = Number(document.getElementById("cantidadGramos").value);
+        const pesoPorTaza = Number(ingrediente.value);
+
+        if (!Number.isFinite(gramos) || gramos <= 0) {
+            alert("Ingresa una cantidad de gramos mayor que cero.");
+            return;
+        }
+
+        const resultado = gramos / pesoPorTaza;
+
+        document.getElementById("valorTazas").textContent =
+            resultado.toLocaleString("es-EC", {
+                maximumFractionDigits: 2
+            }) + " tazas";
+
+        document.getElementById("detalleGramos").textContent =
+            gramos + " gramos de " + nombreIngrediente().toLowerCase();
+
+        document.getElementById("resultadoGramos").style.display = "block";
+    }
+
+    function convertirTazas() {
+        const tazas = Number(document.getElementById("cantidadTazas").value);
+        const pesoPorTaza = Number(ingrediente.value);
+
+        if (!Number.isFinite(tazas) || tazas <= 0) {
+            alert("Ingresa una cantidad de tazas mayor que cero.");
+            return;
+        }
+
+        const resultado = tazas * pesoPorTaza;
+
+        document.getElementById("valorGramos").textContent =
+            resultado.toLocaleString("es-EC", {
+                maximumFractionDigits: 1
+            }) + " gramos";
+
+        document.getElementById("detalleTazas").textContent =
+            tazas + " tazas de " + nombreIngrediente().toLowerCase();
+
+        document.getElementById("resultadoTazas").style.display = "block";
+    }
+
+    actualizarReferencia();
+</script>
+
+</body>
+</html>
