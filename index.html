@@ -1,514 +1,536 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DAGUS LAB: herramientas gratuitas para amantes de la repostería.">
-    <meta name="theme-color" content="#704536">
-    <title>DAGUS LAB | Calculadora de Repostería</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DAGUS LAB: herramientas gratuitas para amantes de la repostería.">
+<meta name="theme-color" content="#704536">
+<title>DAGUS LAB | Calculadora de Repostería</title>
 
-    <style>
-        :root {
-            --cafe: #704536;
-            --terracota: #A65E43;
-            --crema: #FAF5EF;
-            --rosa: #EFC3CD;
-            --texto: #49352D;
-            --blanco: #FFFFFF;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--crema);
-            color: var(--texto);
-            line-height: 1.6;
-        }
-
-        header {
-            text-align: center;
-            padding: 30px 16px 20px;
-        }
-
-        .brand {
-            color: var(--cafe);
-            font-family: Georgia, serif;
-            font-size: 38px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .brand span {
-            display: block;
-            font-family: Arial, sans-serif;
-            font-size: 15px;
-            letter-spacing: 5px;
-            font-weight: normal;
-        }
-
-        .slogan {
-            color: var(--terracota);
-            font-family: Georgia, serif;
-            font-style: italic;
-            font-size: 17px;
-            margin-top: 10px;
-        }
-
-        .container {
-            max-width: 720px;
-            margin: auto;
-            padding: 12px 16px 35px;
-        }
-
-        .hero {
-            background: var(--cafe);
-            color: white;
-            padding: 27px 20px;
-            text-align: center;
-            border-radius: 20px;
-            margin-bottom: 22px;
-        }
-
-        .hero .tag {
-            display: inline-block;
-            background: var(--rosa);
-            color: var(--cafe);
-            border-radius: 30px;
-            padding: 5px 15px;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .hero h1 {
-            font-size: 29px;
-            margin: 13px 0 8px;
-        }
-
-        .hero p {
-            margin: 0;
-            font-size: 15px;
-        }
-
-        .card {
-            background: var(--blanco);
-            padding: 23px;
-            margin-bottom: 20px;
-            border-radius: 18px;
-            box-shadow: 0 5px 20px rgba(80, 48, 35, 0.08);
-        }
-
-        .card h2 {
-            color: var(--cafe);
-            font-size: 21px;
-            margin: 0 0 14px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin: 14px 0 6px;
-            font-size: 14px;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #DDC9BC;
-            background: #FFFCF9;
-            border-radius: 10px;
-            font-size: 16px;
-            color: var(--texto);
-        }
-
-        select:focus, input:focus {
-            outline: 2px solid var(--rosa);
-            border-color: var(--terracota);
-        }
-
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px 7px;
-            border: 1px solid #DDC9BC;
-            border-radius: 10px;
-            color: var(--cafe);
-            background: #FFF9F5;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        .tab.active {
-            color: white;
-            background: var(--terracota);
-            border-color: var(--terracota);
-        }
-
-        .panel {
-            display: none;
-        }
-
-        .panel.active {
-            display: block;
-        }
-
-        .convertir {
-            width: 100%;
-            margin-top: 20px;
-            padding: 15px;
-            background: var(--terracota);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .convertir:hover {
-            background: var(--cafe);
-        }
-
-        .resultado {
-            display: none;
-            background: #F9E9EC;
-            border: 1px solid var(--rosa);
-            border-radius: 12px;
-            margin-top: 17px;
-            padding: 18px;
-            text-align: center;
-        }
-
-        .resultado small {
-            display: block;
-            color: var(--cafe);
-        }
-
-        .resultado strong {
-            display: block;
-            font-size: 27px;
-            color: var(--terracota);
-            margin: 4px 0;
-        }
-
-        .reference {
-            background: #FAF5EF;
-            border-radius: 12px;
-            padding: 14px;
-            margin-top: 15px;
-            font-size: 13px;
-            color: #70584C;
-        }
-
-        .measure-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .measure {
-            background: #FAF5EF;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .measure strong {
-            color: var(--terracota);
-            display: block;
-            font-size: 19px;
-        }
-
-        .notice {
-            font-size: 12px;
-            color: #806D62;
-            margin-top: 15px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px 15px;
-            color: var(--cafe);
-        }
-
-        footer strong {
-            font-family: Georgia, serif;
-            font-size: 22px;
-        }
-
-        @media (max-width: 420px) {
-            .hero h1 {
-                font-size: 24px;
-            }
-
-            .tabs {
-                flex-direction: column;
-            }
-
-            .card {
-                padding: 18px;
-            }
-        }
-    </style>
+<style>
+:root {
+  --cafe:#704536;
+  --terracota:#A65E43;
+  --crema:#FAF5EF;
+  --rosa:#EFC3CD;
+  --texto:#49352D;
+  --blanco:#fff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--crema);
+  color:var(--texto);
+  line-height:1.6;
+}
+header {
+  text-align:center;
+  padding:28px 16px 18px;
+}
+.logo-dagus {
+  display:block;
+  width:145px;
+  max-height:125px;
+  object-fit:contain;
+  margin:0 auto 8px;
+}
+.brand {
+  color:var(--cafe);
+  font-family:Georgia,serif;
+  font-size:34px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+.brand span {
+  display:block;
+  font:normal 14px Arial,sans-serif;
+  letter-spacing:5px;
+}
+.slogan {
+  color:var(--terracota);
+  font:italic 17px Georgia,serif;
+  margin-top:9px;
+}
+.container {
+  max-width:760px;
+  margin:auto;
+  padding:12px 16px 35px;
+}
+.hero {
+  background:var(--cafe);
+  color:white;
+  padding:27px 20px;
+  text-align:center;
+  border-radius:20px;
+  margin-bottom:22px;
+}
+.tag {
+  display:inline-block;
+  background:var(--rosa);
+  color:var(--cafe);
+  border-radius:30px;
+  padding:5px 15px;
+  font-size:13px;
+  font-weight:bold;
+}
+.hero h1 { font-size:28px; margin:13px 0 8px; }
+.hero p { margin:0; font-size:15px; }
+.card {
+  background:var(--blanco);
+  padding:23px;
+  margin-bottom:20px;
+  border-radius:18px;
+  box-shadow:0 5px 20px #50302314;
+}
+.card h2 {
+  color:var(--cafe);
+  font-size:21px;
+  margin:0 0 14px;
+}
+label {
+  display:block;
+  font-weight:bold;
+  margin:14px 0 6px;
+  font-size:14px;
+}
+select,input {
+  width:100%;
+  padding:13px;
+  border:1px solid #DDC9BC;
+  background:#FFFCF9;
+  border-radius:10px;
+  font-size:16px;
+  color:var(--texto);
+}
+select:focus,input:focus {
+  outline:2px solid var(--rosa);
+  border-color:var(--terracota);
+}
+.tabs {
+  display:flex;
+  gap:8px;
+  margin:20px 0;
+}
+.tab {
+  flex:1;
+  padding:12px 7px;
+  border:1px solid #DDC9BC;
+  border-radius:10px;
+  color:var(--cafe);
+  background:#FFF9F5;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:13px;
+}
+.tab.active {
+  color:white;
+  background:var(--terracota);
+  border-color:var(--terracota);
+}
+.panel { display:none; }
+.panel.active { display:block; }
+.convertir {
+  width:100%;
+  margin-top:18px;
+  padding:15px;
+  background:var(--terracota);
+  color:white;
+  border:0;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.convertir:hover { background:var(--cafe); }
+.resultado {
+  display:none;
+  background:#F9E9EC;
+  border:1px solid var(--rosa);
+  border-radius:12px;
+  margin-top:17px;
+  padding:18px;
+  text-align:center;
+}
+.resultado small {
+  display:block;
+  color:var(--cafe);
+}
+.resultado strong {
+  display:block;
+  font-size:27px;
+  color:var(--terracota);
+  margin:4px 0;
+}
+.reference,.note {
+  background:var(--crema);
+  border-radius:12px;
+  padding:14px;
+  margin-top:14px;
+  font-size:13px;
+  color:#70584C;
+}
+.measure-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.measure {
+  background:var(--crema);
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+}
+.measure strong {
+  color:var(--terracota);
+  display:block;
+  font-size:19px;
+}
+.notice {
+  font-size:12px;
+  color:#806D62;
+  margin-top:15px;
+}
+.socials {
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+.social-btn {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-width:145px;
+  padding:12px 18px;
+  border-radius:12px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:15px;
+  transition:transform .2s,opacity .2s;
+}
+.social-btn:hover {
+  transform:translateY(-3px);
+  opacity:.9;
+}
+.social-btn svg {
+  width:23px;
+  height:23px;
+  fill:currentColor;
+  flex-shrink:0;
+}
+.facebook { background:#1877F2; }
+.instagram {
+  background:linear-gradient(45deg,#FCAF45,#DD2A7B,#8134AF,#515BD4);
+}
+.tiktok { background:#111; }
+footer {
+  text-align:center;
+  padding:25px 15px;
+  color:var(--cafe);
+}
+footer strong {
+  font:bold 22px Georgia,serif;
+}
+@media(max-width:480px) {
+  .hero h1 { font-size:24px; }
+  .tabs { flex-direction:column; }
+  .card { padding:18px; }
+  .logo-dagus { width:125px; }
+  .social-btn { width:100%; }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <div class="brand">
-        DAGUS
-        <span>PASTELERÍA</span>
-    </div>
-    <div class="slogan">
-        No regalas cosas, regalas momentos ♡
-    </div>
+  <img src="logoDAGUSdorado.png"
+       alt="Logo DAGUS Pastelería"
+       class="logo-dagus">
+  <div class="brand">DAGUS<span>PASTELERÍA</span></div>
+  <div class="slogan">No regalas cosas, regalas momentos ♡</div>
 </header>
 
 <main class="container">
 
-    <section class="hero">
-        <span class="tag">HERRAMIENTA GRATUITA</span>
-        <h1>🍰 ¡Bienvenido a DAGUS LAB!</h1>
-        <p>
-            Tu espacio para aprender, crear y disfrutar
-            del maravilloso mundo de la repostería.
-        </p>
-    </section>
+<section class="hero">
+  <span class="tag">HERRAMIENTA GRATUITA</span>
+  <h1>🍰 ¡Bienvenido a DAGUS LAB!</h1>
+  <p>Tu espacio para aprender, crear y disfrutar del maravilloso mundo de la repostería.</p>
+</section>
 
-    <section class="card">
-        <h2>⚖️ Calculadora de repostería</h2>
+<section class="card">
+<h2>⚖️ Calculadora de repostería</h2>
 
-        <label for="ingrediente">Selecciona tu ingrediente:</label>
-        <select id="ingrediente">
-            <option value="125">Harina de trigo</option>
-            <option value="200">Azúcar granulada</option>
-            <option value="120">Azúcar glass</option>
-            <option value="227">Mantequilla</option>
-            <option value="85">Cacao en polvo</option>
-            <option value="90">Avena en hojuelas</option>
-            <option value="120">Maicena</option>
-            <option value="220">Azúcar morena compactada</option>
-        </select>
+<div class="tabs">
+  <button class="tab active" onclick="mostrar('secos',this)">Ingredientes secos</button>
+  <button class="tab" onclick="mostrar('liquidos',this)">Líquidos</button>
+  <button class="tab" onclick="mostrar('mantequilla',this)">Mantequilla</button>
+  <button class="tab" onclick="mostrar('medidas',this)">Otras medidas</button>
+</div>
 
-        <div class="reference" id="referencia">
-            1 taza de harina de trigo equivale aproximadamente a 125 gramos.
-        </div>
+<div id="secos" class="panel active">
+  <label for="ingrediente">Selecciona un ingrediente:</label>
+  <select id="ingrediente">
+    <option value="125">Harina de trigo</option>
+    <option value="200">Azúcar granulada</option>
+    <option value="120">Azúcar glass</option>
+    <option value="85">Cacao en polvo</option>
+    <option value="90">Avena en hojuelas</option>
+    <option value="120">Maicena</option>
+    <option value="220">Azúcar morena compactada</option>
+  </select>
 
-        <div class="tabs">
-            <button class="tab active" onclick="mostrar('gramos', this)">
-                Gramos a tazas
-            </button>
-            <button class="tab" onclick="mostrar('tazas', this)">
-                Tazas a gramos
-            </button>
-            <button class="tab" onclick="mostrar('medidas', this)">
-                Otras medidas
-            </button>
-        </div>
+  <div class="reference" id="referencia">
+    1 taza de harina de trigo equivale aproximadamente a 125 gramos.
+  </div>
 
-        <div id="gramos" class="panel active">
-            <label for="cantidadGramos">Cantidad en gramos:</label>
-            <input
-                type="number"
-                id="cantidadGramos"
-                min="0"
-                step="any"
-                placeholder="Ejemplo: 250"
-            >
+  <label for="gramos">Cantidad en gramos:</label>
+  <input id="gramos" type="number" min="0" step="any" placeholder="Ejemplo: 250">
 
-            <button class="convertir" onclick="convertirGramos()">
-                Convertir a tazas
-            </button>
+  <button class="convertir" onclick="convertirSecos()">Convertir a tazas</button>
 
-            <div id="resultadoGramos" class="resultado">
-                <small>RESULTADO</small>
-                <strong id="valorTazas"></strong>
-                <span id="detalleGramos"></span>
-            </div>
-        </div>
+  <div id="resSecos" class="resultado">
+    <small>RESULTADO APROXIMADO</small>
+    <strong id="valorSecos"></strong>
+    <span id="detalleSecos"></span>
+  </div>
 
-        <div id="tazas" class="panel">
-            <label for="cantidadTazas">Cantidad en tazas:</label>
-            <input
-                type="number"
-                id="cantidadTazas"
-                min="0"
-                step="any"
-                placeholder="Ejemplo: 2"
-            >
+  <p class="notice">Las equivalencias de ingredientes secos son aproximadas. El peso cambia según cómo se llene o compacte la taza. Para mayor precisión, utiliza una balanza.</p>
+</div>
 
-            <button class="convertir" onclick="convertirTazas()">
-                Convertir a gramos
-            </button>
+<div id="liquidos" class="panel">
+  <p>Convierte onzas líquidas estadounidenses (fl oz) a litros, o litros a onzas líquidas.</p>
 
-            <div id="resultadoTazas" class="resultado">
-                <small>RESULTADO</small>
-                <strong id="valorGramos"></strong>
-                <span id="detalleTazas"></span>
-            </div>
-        </div>
+  <label for="tipoLiquido">Tipo de conversión:</label>
+  <select id="tipoLiquido">
+    <option value="ozl">Onzas líquidas a litros</option>
+    <option value="loz">Litros a onzas líquidas</option>
+    <option value="ml">Mililitros a litros</option>
+    <option value="lm">Litros a mililitros</option>
+  </select>
 
-        <div id="medidas" class="panel">
-            <h2>🥄 Equivalencias de cocina</h2>
+  <label for="cantidadLiquido" id="labelLiquido">Cantidad en onzas líquidas:</label>
+  <input id="cantidadLiquido" type="number" min="0" step="any" placeholder="Ejemplo: 16">
 
-            <div class="measure-grid">
-                <div class="measure">
-                    <strong>240 ml</strong>
-                    1 taza
-                </div>
-                <div class="measure">
-                    <strong>120 ml</strong>
-                    ½ taza
-                </div>
-                <div class="measure">
-                    <strong>60 ml</strong>
-                    ¼ taza
-                </div>
-                <div class="measure">
-                    <strong>15 ml</strong>
-                    1 cucharada
-                </div>
-                <div class="measure">
-                    <strong>5 ml</strong>
-                    1 cucharadita
-                </div>
-                <div class="measure">
-                    <strong>16</strong>
-                    Cucharadas por taza
-                </div>
-            </div>
-        </div>
+  <button class="convertir" onclick="convertirLiquidos()">Convertir</button>
 
-        <p class="notice">
-            * Las equivalencias de peso son aproximadas.
-            Pueden variar según el ingrediente, la marca,
-            la humedad y la forma de llenar la taza.
-            Para obtener mayor precisión, utiliza una balanza.
-        </p>
-    </section>
+  <div id="resLiquidos" class="resultado">
+    <small>RESULTADO</small>
+    <strong id="valorLiquido"></strong>
+    <span id="detalleLiquido"></span>
+  </div>
 
-    <section class="card">
-        <h2>❤️ Más que una pastelería</h2>
-        <p>
-            En DAGUS creemos que compartir, aprender y crear
-            también son formas de regalar momentos.
-        </p>
-        <p>
-            Esta herramienta es gratuita para nuestra comunidad
-            de amantes de la repostería.
-        </p>
-    </section>
+  <p class="notice">1 onza líquida estadounidense ≈ 29,57 ml. Las onzas líquidas miden volumen, no peso.</p>
+</div>
+
+<div id="mantequilla" class="panel">
+  <p>Para mantequilla sólida, convierte gramos a cucharadas.</p>
+
+  <label for="gramosMantequilla">Cantidad de mantequilla en gramos:</label>
+  <input id="gramosMantequilla" type="number" min="0" step="any" placeholder="Ejemplo: 100">
+
+  <button class="convertir" onclick="convertirMantequilla()">Convertir a cucharadas</button>
+
+  <div id="resMantequilla" class="resultado">
+    <small>RESULTADO APROXIMADO</small>
+    <strong id="valorMantequilla"></strong>
+    <span id="detalleMantequilla"></span>
+  </div>
+
+  <div class="reference">Referencia: 1 cucharada de mantequilla ≈ 14,2 gramos. Para recetas precisas, pesa la mantequilla con una balanza.</div>
+</div>
+
+<div id="medidas" class="panel">
+  <h2>🥄 Equivalencias de cocina</h2>
+  <div class="measure-grid">
+    <div class="measure"><strong>240 ml</strong>1 taza</div>
+    <div class="measure"><strong>120 ml</strong>½ taza</div>
+    <div class="measure"><strong>60 ml</strong>¼ taza</div>
+    <div class="measure"><strong>15 ml</strong>1 cucharada</div>
+    <div class="measure"><strong>5 ml</strong>1 cucharadita</div>
+    <div class="measure"><strong>16</strong>Cucharadas por taza</div>
+    <div class="measure"><strong>29,57 ml</strong>1 onza líquida (EE. UU.)</div>
+    <div class="measure"><strong>1.000 ml</strong>1 litro</div>
+  </div>
+  <p class="notice">Las tazas y cucharas pueden variar según el sistema de medida de la receta.</p>
+</div>
+
+</section>
+
+<section class="card">
+<h2>❤️ Más que una pastelería</h2>
+<p>En DAGUS creemos que compartir, aprender y crear también son formas de regalar momentos.</p>
+<p>Esta herramienta es gratuita para nuestra comunidad de amantes de la repostería.</p>
+</section>
+
+<section class="card" style="text-align:center">
+<h2>📲 Sigue a DAGUS en redes sociales</h2>
+<p>Descubre nuestras creaciones, novedades y momentos dulces.</p>
+
+<div class="socials">
+
+<a class="social-btn facebook"
+   href="https://www.facebook.com/profile.php?id=61595465819326"
+   target="_blank" rel="noopener noreferrer"
+   aria-label="Visitar Facebook de DAGUS">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.5 1.6-1.5h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.3v3.2h2.8V21h3.4z"/>
+  </svg>
+  Facebook
+</a>
+
+<a class="social-btn instagram"
+   href="https://www.instagram.com/daguspasteleria_dolcezza/"
+   target="_blank" rel="noopener noreferrer"
+   aria-label="Visitar Instagram de DAGUS">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2H7zm5 2.3a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2.2a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6zm5.7-3.4a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6z"/>
+  </svg>
+  Instagram
+</a>
+
+<a class="social-btn tiktok"
+   href="https://www.tiktok.com/@daguspasteleria"
+   target="_blank" rel="noopener noreferrer"
+   aria-label="Visitar TikTok de DAGUS">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19.6 7.1a6.8 6.8 0 0 1-4.1-1.4v8.1a6.1 6.1 0 1 1-6.1-6.1c.4 0 .8 0 1.2.1v3.4a2.8 2.8 0 1 0 1.6 2.5V2h3.4c.2 2.2 1.8 4 4 4.4v.7z"/>
+  </svg>
+  TikTok
+</a>
+
+</div>
+</section>
 
 </main>
 
 <footer>
-    <strong>DAGUS PASTELERÍA</strong>
-    <p>No regalas cosas, regalas momentos ♡</p>
-    <small>© 2026 DAGUS LAB · Todos los derechos reservados.</small>
+<strong>DAGUS PASTELERÍA</strong>
+<p>No regalas cosas, regalas momentos ♡</p>
+<small>© 2026 DAGUS LAB · Todos los derechos reservados.</small>
 </footer>
 
 <script>
-    const ingrediente = document.getElementById("ingrediente");
-    const referencia = document.getElementById("referencia");
+const ingrediente = document.getElementById('ingrediente');
 
-    const nombres = {
-        "125": "harina de trigo",
-        "200": "azúcar granulada",
-        "120": "azúcar glass o maicena",
-        "227": "mantequilla",
-        "85": "cacao en polvo",
-        "90": "avena en hojuelas",
-        "220": "azúcar morena compactada"
-    };
+function nombreIngrediente() {
+  return ingrediente.options[ingrediente.selectedIndex].text;
+}
 
-    function nombreIngrediente() {
-        return ingrediente.options[ingrediente.selectedIndex].text;
-    }
+function actualizarReferencia() {
+  document.getElementById('referencia').textContent =
+    `1 taza de ${nombreIngrediente().toLowerCase()} equivale aproximadamente a ${ingrediente.value} gramos.`;
+}
 
-    function actualizarReferencia() {
-        const gramos = Number(ingrediente.value);
-        referencia.textContent =
-            "1 taza de " + nombreIngrediente().toLowerCase() +
-            " equivale aproximadamente a " + gramos + " gramos.";
-    }
+ingrediente.addEventListener('change', () => {
+  actualizarReferencia();
+  document.getElementById('resSecos').style.display = 'none';
+});
 
-    ingrediente.addEventListener("change", function() {
-        actualizarReferencia();
-        document.getElementById("resultadoGramos").style.display = "none";
-        document.getElementById("resultadoTazas").style.display = "none";
-    });
+function mostrar(id, boton) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  boton.classList.add('active');
+}
 
-    function mostrar(panelId, boton) {
-        document.querySelectorAll(".panel").forEach(panel => {
-            panel.classList.remove("active");
-        });
+function formato(n, max=2) {
+  return n.toLocaleString('es-EC', {maximumFractionDigits:max});
+}
 
-        document.querySelectorAll(".tab").forEach(tab => {
-            tab.classList.remove("active");
-        });
+function validar(n) {
+  if (!Number.isFinite(n) || n <= 0) {
+    alert('Ingresa una cantidad mayor que cero.');
+    return false;
+  }
+  return true;
+}
 
-        document.getElementById(panelId).classList.add("active");
-        boton.classList.add("active");
-    }
+function convertirSecos() {
+  const g = Number(document.getElementById('gramos').value);
+  if (!validar(g)) return;
 
-    function convertirGramos() {
-        const gramos = Number(document.getElementById("cantidadGramos").value);
-        const pesoPorTaza = Number(ingrediente.value);
+  const t = g / Number(ingrediente.value);
+  document.getElementById('valorSecos').textContent = formato(t) + ' tazas';
+  document.getElementById('detalleSecos').textContent =
+    `${formato(g,1)} g de ${nombreIngrediente().toLowerCase()}`;
+  document.getElementById('resSecos').style.display = 'block';
+}
 
-        if (!Number.isFinite(gramos) || gramos <= 0) {
-            alert("Ingresa una cantidad de gramos mayor que cero.");
-            return;
-        }
+const tipoLiquido = document.getElementById('tipoLiquido');
 
-        const resultado = gramos / pesoPorTaza;
+tipoLiquido.addEventListener('change', () => {
+  const labels = {
+    ozl:'Cantidad en onzas líquidas (fl oz):',
+    loz:'Cantidad en litros:',
+    ml:'Cantidad en mililitros:',
+    lm:'Cantidad en litros:'
+  };
 
-        document.getElementById("valorTazas").textContent =
-            resultado.toLocaleString("es-EC", {
-                maximumFractionDigits: 2
-            }) + " tazas";
+  document.getElementById('labelLiquido').textContent = labels[tipoLiquido.value];
+  document.getElementById('cantidadLiquido').value = '';
+  document.getElementById('resLiquidos').style.display = 'none';
+});
 
-        document.getElementById("detalleGramos").textContent =
-            gramos + " gramos de " + nombreIngrediente().toLowerCase();
+function convertirLiquidos() {
+  const n = Number(document.getElementById('cantidadLiquido').value);
+  if (!validar(n)) return;
 
-        document.getElementById("resultadoGramos").style.display = "block";
-    }
+  let r, unidad, detalle;
 
-    function convertirTazas() {
-        const tazas = Number(document.getElementById("cantidadTazas").value);
-        const pesoPorTaza = Number(ingrediente.value);
+  switch(tipoLiquido.value) {
+    case 'ozl':
+      r = n * 29.5735295625 / 1000;
+      unidad = 'litros';
+      detalle = `${formato(n)} onzas líquidas`;
+      break;
+    case 'loz':
+      r = n * 1000 / 29.5735295625;
+      unidad = 'onzas líquidas';
+      detalle = `${formato(n,3)} litros`;
+      break;
+    case 'ml':
+      r = n / 1000;
+      unidad = 'litros';
+      detalle = `${formato(n)} mililitros`;
+      break;
+    default:
+      r = n * 1000;
+      unidad = 'mililitros';
+      detalle = `${formato(n,3)} litros`;
+  }
 
-        if (!Number.isFinite(tazas) || tazas <= 0) {
-            alert("Ingresa una cantidad de tazas mayor que cero.");
-            return;
-        }
+  document.getElementById('valorLiquido').textContent =
+    `${formato(r,3)} ${unidad}`;
+  document.getElementById('detalleLiquido').textContent = detalle;
+  document.getElementById('resLiquidos').style.display = 'block';
+}
 
-        const resultado = tazas * pesoPorTaza;
+function convertirMantequilla() {
+  const g = Number(document.getElementById('gramosMantequilla').value);
+  if (!validar(g)) return;
 
-        document.getElementById("valorGramos").textContent =
-            resultado.toLocaleString("es-EC", {
-                maximumFractionDigits: 1
-            }) + " gramos";
+  const cucharadas = g / 14.2;
 
-        document.getElementById("detalleTazas").textContent =
-            tazas + " tazas de " + nombreIngrediente().toLowerCase();
+  document.getElementById('valorMantequilla').textContent =
+    `${formato(cucharadas)} cucharadas`;
+  document.getElementById('detalleMantequilla').textContent =
+    `${formato(g,1)} gramos de mantequilla sólida`;
+  document.getElementById('resMantequilla').style.display = 'block';
+}
 
-        document.getElementById("resultadoTazas").style.display = "block";
-    }
-
-    actualizarReferencia();
+actualizarReferencia();
 </script>
 
 </body>
 </html>
+
 
 
 
